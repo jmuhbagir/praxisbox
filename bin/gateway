@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /home/pi/gateway/src
+sudo node run.js "$@"
