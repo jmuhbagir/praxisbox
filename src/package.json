@@ -1,0 +1,33 @@
+{
+  "name": "praxis-iot-gateway",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node run.js"
+  },
+  "dependencies": {
+    "ble-serial": "^0.5.0",
+    "ble-serialport": "^0.1.8",
+    "bluetooth-serial-port": "^2.1.5",
+    "csv-parse": "^2.0.4",
+    "etherport": "^0.2.0",
+    "etherport-client": "*",
+    "express": "*",
+    "firmata": "*",
+    "forever-monitor": "*",
+    "fs-extra": "*",
+    "johnny-five": "*",
+    "mqtt": "*",
+    "net-ping": "^1.2.1",
+    "netmask": "*",
+    "noble": "^1.9.1",
+    "node-bluetooth": "^1.2.0",
+    "node-cmd": "*",
+    "node-cron": "^1.2.1",
+    "node-rest-client": "*",
+    "prompt": "*",
+    "redis": "*",
+    "replace": "*",
+    "serialport": "*"
+  }
+}

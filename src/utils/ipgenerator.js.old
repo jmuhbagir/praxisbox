@@ -1,0 +1,47 @@
+var redis = require('../storage/redis');
+var fs = require('fs');
+var parse = require('csv-parse');
+var async = require('async');
+var Netmask = require('netmask').Netmask;
+
+exports.getIP = function(callback){
+ var ipsensor = undefined;
+ var ips = [];
+ var found = false;
+ var gotIt = false;
+
+
+ var inputFile='/var/lib/misc/dnsmasq.leases';
+
+ redis.read('wifi_subnet',function(value){
+
+   var block = new Netmask(value);
+   if(value==undefined){
+      console.log('Please set your router ip subnet first!');
+      throw err;
+   }
+
+  block.forEach(function(ip, long, index){
+    var parser = parse({delimiter: ' '}, function (err, data) {
+       async.eachSeries(data, function (line, callback) {
+         // do something with the line
+         if(ip === line[2]){
+            found = true;
+         }
+         
+         callback();
+       }, function(error, results){
+          if(!found && !gotIt && ip !== block.first && ip !== block.mask){
+            ipsensor = {};
+            ipsensor['ip'] = ip;
+            ipsensor['netmask'] = block.mask;
+            ipsensor['gateway'] = block.first
+            gotIt = true;
+            return callback(ipsensor);
+           }
+       }); 
+     });
+     fs.createReadStream(inputFile).pipe(parser);
+   });
+ });
+}
